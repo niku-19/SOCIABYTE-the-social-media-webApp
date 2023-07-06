@@ -25,7 +25,7 @@ const FeedCard = ({ DATA, handleAddToBookMark }) => {
   const {
     deletePost,
     getAllPosts,
-    likeAndDislikePost,
+    likePost,
     createComment,
     deleteComment,
     removePostFromBookmark,
@@ -43,11 +43,7 @@ const FeedCard = ({ DATA, handleAddToBookMark }) => {
   };
 
   const handleLikeAndDisLike = (id) => {
-    if (DATA?.likedByUsers) {
-      likeAndDislikePost(id, "dislike");
-    } else {
-      likeAndDislikePost(id, "like");
-    }
+    likePost(id);
   };
 
   const handleCreateComment = (e, id, comment) => {
@@ -133,7 +129,7 @@ const FeedCard = ({ DATA, handleAddToBookMark }) => {
           </div>
         )}
         <div className={styles.like__comment__count__container}>
-          <div className={styles.likes__count}>{DATA.likes} Likes</div>
+          <div className={styles.likes__count}> Likes</div>
           <div className={styles.comment__count}>
             {DATA?.comments?.length} Comment
           </div>

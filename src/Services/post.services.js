@@ -37,20 +37,27 @@ const editPostServices = async (id, editData) =>
     }
   );
 
-//like dislike post services
+//like  post services
 
-const likeDislikePostServices = async (id, type) =>
+const likePostServices = async (id) =>
   await axios.patch(
     `like/${id}`,
-    {
-      type: type,
-    },
+    {},
     {
       headers: {
         authorization: `${localStorage.getItem("token")}`,
       },
     }
   );
+
+//dislike post services
+
+const disLikePostServices = async (id) =>
+  await axios.patch(`dislike/${id}`, {
+    headers: {
+      authorization: `${localStorage.getItem("token")}`,
+    },
+  });
 
 //commetn post services
 
@@ -128,11 +135,12 @@ export {
   getAllPostServices,
   deletePostServices,
   editPostServices,
-  likeDislikePostServices,
+  likePostServices,
   commentPostServices,
   deleteCommentPostServices,
   getPostByIdServices,
   bookmarkPostServices,
   getBookmarkPostServices,
   removoBookmarkPostServices,
+  disLikePostServices,
 };

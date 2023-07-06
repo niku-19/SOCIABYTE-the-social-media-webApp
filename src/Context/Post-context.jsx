@@ -11,7 +11,7 @@ import {
   getAllPostServices,
   getBookmarkPostServices,
   getPostByIdServices,
-  likeDislikePostServices,
+  likePostServices,
   removoBookmarkPostServices,
 } from "../Services/post.services";
 import { INITIAL_STATE, PostReducer } from "../Reducers/Post-reducer";
@@ -83,16 +83,17 @@ const PostContextProvider = ({ children }) => {
     }
   };
 
-  //like dislike post
+  //like post
 
-  const likeAndDislikePost = async (id, type) => {
+  const likePost = async (id) => {
     try {
-      const res = await likeDislikePostServices(id, type);
+      const res = await likePostServices(id);
+      console.log("🚀 ~ file: Post-context.jsx:91 ~ likePost ~ res:", res);
       if (res.status === 200) {
-        dispatch({ type: "LIKE_DISLIKE_POST", payload: res.data?.postData });
-        getBookmarkedPost();
-        hideLoader();
-        successToast("Post Liked Successfully");
+        dispatch({
+          type: "USER__LIKED__POST",
+          payload: res.data.postData,
+        });
       }
     } catch (err) {
       console.log(err);
@@ -203,11 +204,11 @@ const PostContextProvider = ({ children }) => {
         postData,
         dispatch,
         editPostfun,
-        likeAndDislikePost,
         createComment,
         deleteComment,
         getPostById,
         bookmarkPost,
+        likePost,
         getBookmarkedPost,
         removePostFromBookmark,
       }}
