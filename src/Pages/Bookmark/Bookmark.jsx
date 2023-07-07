@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import LeftSideBar from "../../Components/LeftSideBar/LeftSideBar";
 import RightSideBar from "../../Components/RightSideBar/RightSideBar";
 import { usePostData } from "../../Context/Post-context";
@@ -10,10 +10,20 @@ import { useLoader } from "../../Context/LoaderContext";
 import Loader from "../../Components/Loader/Loader";
 import { ToastContainer } from "react-toastify";
 import PhoneNav from "../../Components/Phone Nav/PhoneNav";
+import PhoneFeedUpload from "../../Common/Phone feed Upload/PhoneFeedUpload";
 
 const Bookmark = () => {
   const { getBookmarkedPost } = usePostData();
   const { loader } = useLoader();
+  const [showPhoneFeedUpload, setShowPhoneFeedUpload] = useState(false);
+
+  const handleShowPhoneFeedUpload = () => {
+    setShowPhoneFeedUpload(true);
+  };
+
+  const handleHidePhoneFeedUpload = () => {
+    setShowPhoneFeedUpload(false);
+  };
   useEffect(() => {
     getBookmarkedPost();
   }, []);
@@ -42,7 +52,12 @@ const Bookmark = () => {
         {/* side bar  */}
         <RightSideBar />
       </div>
-      <PhoneNav />
+      <PhoneNav handleShowPhoneFeedUpload={handleShowPhoneFeedUpload} />
+      {showPhoneFeedUpload && (
+        <PhoneFeedUpload
+          handleHidePhoneFeedUpload={handleHidePhoneFeedUpload}
+        />
+      )}
     </>
   );
 };

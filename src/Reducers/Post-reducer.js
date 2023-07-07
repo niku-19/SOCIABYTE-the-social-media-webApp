@@ -163,7 +163,9 @@ const PostReducer = (state, { type, payload }) => {
       };
     }
     case "SORT_POST__BY__MOST-LIKED": {
-      const sortedData = [...state.posts].sort((a, b) => b.likes - a.likes);
+      const sortedData = [...state.posts].sort(
+        (a, b) => b.likes.length - a.likes.length
+      );
 
       return {
         ...state,

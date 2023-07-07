@@ -7,11 +7,14 @@ import HomePage from "../HomePage/HomePage";
 import PhoneNav from "../../Components/Phone Nav/PhoneNav";
 import PhoneFeedUpload from "../../Common/Phone feed Upload/PhoneFeedUpload";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
   const [showPhoneFeedUpload, setShowPhoneFeedUpload] = useState(false);
+  const navigate = useNavigate();
 
   const handleShowPhoneFeedUpload = () => {
+    navigate("/");
     setShowPhoneFeedUpload(true);
   };
 

@@ -8,9 +8,20 @@ import { useLoader } from "../../Context/LoaderContext";
 import Loader from "../../Components/Loader/Loader";
 import { ToastContainer } from "react-toastify";
 import PhoneNav from "../../Components/Phone Nav/PhoneNav";
+import { useState } from "react";
+import PhoneFeedUpload from "../../Common/Phone feed Upload/PhoneFeedUpload";
 
 const Explore = () => {
   const { loader } = useLoader();
+  const [showPhoneFeedUpload, setShowPhoneFeedUpload] = useState(false);
+
+  const handleShowPhoneFeedUpload = () => {
+    setShowPhoneFeedUpload(true);
+  };
+
+  const handleHidePhoneFeedUpload = () => {
+    setShowPhoneFeedUpload(false);
+  };
 
   return (
     <>
@@ -38,7 +49,12 @@ const Explore = () => {
         {/* side bar  */}
         <RightSideBar />
       </div>
-      <PhoneNav />
+      <PhoneNav handleShowPhoneFeedUpload={handleShowPhoneFeedUpload} />
+      {showPhoneFeedUpload && (
+        <PhoneFeedUpload
+          handleHidePhoneFeedUpload={handleHidePhoneFeedUpload}
+        />
+      )}
     </>
   );
 };

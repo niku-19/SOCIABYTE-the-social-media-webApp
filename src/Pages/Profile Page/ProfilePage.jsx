@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import LeftSideBar from "../../Components/LeftSideBar/LeftSideBar";
 import RightSideBar from "../../Components/RightSideBar/RightSideBar";
 import { profileService } from "../../Services/Profile.services";
@@ -12,10 +12,21 @@ import { useLoader } from "../../Context/LoaderContext";
 import Loader from "../../Components/Loader/Loader";
 import { ToastContainer } from "react-toastify";
 import PhoneNav from "../../Components/Phone Nav/PhoneNav";
+import PhoneFeedUpload from "../../Common/Phone feed Upload/PhoneFeedUpload";
 
 const ProfilePage = () => {
   const { getUser } = useUser();
   const { getPostById } = usePostData();
+  const [showPhoneFeedUpload, setShowPhoneFeedUpload] = useState(false);
+
+  const handleShowPhoneFeedUpload = () => {
+    setShowPhoneFeedUpload(true);
+  };
+
+  const handleHidePhoneFeedUpload = () => {
+    setShowPhoneFeedUpload(false);
+  };
+
   const { loader, showLoader, hideLoader } = useLoader();
   useEffect(() => {
     (async () => {
@@ -58,7 +69,12 @@ const ProfilePage = () => {
         {/* side bar  */}
         <RightSideBar isShowFriend={true} />
       </div>
-      <PhoneNav />
+      <PhoneNav handleShowPhoneFeedUpload={handleShowPhoneFeedUpload} />
+      {showPhoneFeedUpload && (
+        <PhoneFeedUpload
+          handleHidePhoneFeedUpload={handleHidePhoneFeedUpload}
+        />
+      )}
     </>
   );
 };
