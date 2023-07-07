@@ -7,6 +7,7 @@ import {
   createPostServices,
   deleteCommentPostServices,
   deletePostServices,
+  disLikePostServices,
   editPostServices,
   getAllPostServices,
   getBookmarkPostServices,
@@ -25,13 +26,17 @@ const PostContextProvider = ({ children }) => {
   const { successToast } = useToaster();
   //errorToast, warrningToast
   const [postData, dispatch] = useReducer(PostReducer, INITIAL_STATE);
+  console.log(
+    "🚀 ~ file: Post-context.jsx:29 ~ PostContextProvider ~ postData:",
+    postData
+  );
 
   //create post calling the service
   const createNewPost = async (data) => {
     try {
+      showLoader("creating your Post");
       const res = await createPostServices(data);
       if (res.status === 201) {
-        console.log(res);
         hideLoader();
         successToast("Post Created Successfully");
       }
@@ -46,7 +51,7 @@ const PostContextProvider = ({ children }) => {
       showLoader("Getting All Posts...");
       const res = await getAllPostServices();
       if (res.status === 200) {
-        dispatch({ type: "GET_ALL_POSTS", payload: res.data?.postData });
+        dispatch({ type: "GET_ALL_POSTS", payload: res?.data?.postData });
         hideLoader();
       }
     } catch (err) {
@@ -72,7 +77,6 @@ const PostContextProvider = ({ children }) => {
   const editPostfun = async (postId, data) => {
     try {
       const res = await editPostServices(postId, data);
-      console.log(res);
       if (res.status === 200) {
         getAllPosts();
         hideLoader();
@@ -88,11 +92,26 @@ const PostContextProvider = ({ children }) => {
   const likePost = async (id) => {
     try {
       const res = await likePostServices(id);
-      console.log("🚀 ~ file: Post-context.jsx:91 ~ likePost ~ res:", res);
       if (res.status === 200) {
         dispatch({
           type: "USER__LIKED__POST",
-          payload: res.data.postData,
+          payload: res?.data?.postData,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  //dislikepost
+
+  const disLikePost = async (id) => {
+    try {
+      const res = await disLikePostServices(id);
+      if (res.status === 200) {
+        dispatch({
+          type: "DISLIKE__POST",
+          payload: res?.data?.postData,
         });
       }
     } catch (err) {
@@ -137,7 +156,6 @@ const PostContextProvider = ({ children }) => {
     try {
       const res = await bookmarkPostServices(postId, token);
       if (res.status === 200) {
-        console.log(res);
         showLoader();
         successToast("Post Bookmarked Successfully");
       }
@@ -187,7 +205,6 @@ const PostContextProvider = ({ children }) => {
       showLoader("Deleting Post...");
       const res = await deletePostServices(postId);
       if (res.status === 200) {
-        console.log(res);
         hideLoader();
       }
     } catch (err) {
@@ -207,6 +224,7 @@ const PostContextProvider = ({ children }) => {
         createComment,
         deleteComment,
         getPostById,
+        disLikePost,
         bookmarkPost,
         likePost,
         getBookmarkedPost,

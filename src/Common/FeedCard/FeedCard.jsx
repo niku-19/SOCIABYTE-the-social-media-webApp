@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import styles from "./FeedCard.module.css";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -14,7 +15,7 @@ import EditPost from "../EditPost/EditPost";
 import Loader from "../../Components/Loader/Loader";
 import { useLoader } from "../../Context/LoaderContext";
 
-const FeedCard = ({ DATA, handleAddToBookMark }) => {
+const FeedCard = ({ DATA, handleAddToBookMark, isLiked, isBookMarked }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [showComment, setShowComment] = useState(false);
@@ -29,10 +30,10 @@ const FeedCard = ({ DATA, handleAddToBookMark }) => {
     createComment,
     deleteComment,
     removePostFromBookmark,
+    disLikePost,
   } = usePostData();
 
   const handleDeletePost = async () => {
-    console.log("clicked");
     setShowDelete(false);
     await deletePost(DATA._id);
     getAllPosts();
@@ -42,8 +43,13 @@ const FeedCard = ({ DATA, handleAddToBookMark }) => {
     setShowEdit(false);
   };
 
-  const handleLikeAndDisLike = (id) => {
+  const handleLikePost = (id) => {
+    console.log("btn");
     likePost(id);
+  };
+
+  const handleDisLikePost = (id) => {
+    disLikePost(id);
   };
 
   const handleCreateComment = (e, id, comment) => {
@@ -95,10 +101,10 @@ const FeedCard = ({ DATA, handleAddToBookMark }) => {
             {showDelete && (
               <BsBookmarkFill
                 style={{
-                  fill: DATA?.isBookmarked ? "black" : "#ccc",
+                  fill: isBookMarked ? "black" : "#ccc",
                 }}
                 onClick={
-                  DATA?.isBookmarked
+                  isBookMarked
                     ? () => handleRemoveBookMark(DATA._id)
                     : () => handleAddToBookMark(DATA._id)
                 }
@@ -129,7 +135,7 @@ const FeedCard = ({ DATA, handleAddToBookMark }) => {
           </div>
         )}
         <div className={styles.like__comment__count__container}>
-          <div className={styles.likes__count}> Likes</div>
+          <div className={styles.likes__count}> {DATA.likes.length} Likes</div>
           <div className={styles.comment__count}>
             {DATA?.comments?.length} Comment
           </div>
@@ -137,13 +143,13 @@ const FeedCard = ({ DATA, handleAddToBookMark }) => {
         <div className={styles.like__commnet__container}>
           {
             <button
-              onClick={() => handleLikeAndDisLike(DATA._id)}
-              style={{ color: DATA?.likedByUsers ? "blue" : "black" }}
+              onClick={() =>
+                isLiked ? handleDisLikePost(DATA._id) : handleLikePost(DATA._id)
+              }
+              style={{ color: isLiked ? "blue" : "black" }}
             >
-              <AiTwotoneLike
-                style={{ color: DATA?.likedByUsers ? "blue" : "black" }}
-              />
-              {DATA?.likedByUsers ? "Liked" : "Like"}
+              <AiTwotoneLike style={{ color: isLiked ? "blue" : "black" }} />
+              {isLiked ? "Liked" : "Like"}
             </button>
           }
           <button onClick={() => setShowComment((prev) => !prev)}>

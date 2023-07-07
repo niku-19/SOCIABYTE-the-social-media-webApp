@@ -161,3 +161,15 @@
   background-color: #4db5ff;
   color: #000;
 }
+
+@media screen and (max-width: 500px) {
+  .model__container {
+    width: 90%;
+  }
+  .cover__image__container {
+    height: 25rem;
+  }
+  .avatar__container {
+    margin-top: -10rem;
+  }
+}

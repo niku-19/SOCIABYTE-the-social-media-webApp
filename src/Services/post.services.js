@@ -53,11 +53,15 @@ const likePostServices = async (id) =>
 //dislike post services
 
 const disLikePostServices = async (id) =>
-  await axios.patch(`dislike/${id}`, {
-    headers: {
-      authorization: `${localStorage.getItem("token")}`,
-    },
-  });
+  await axios.patch(
+    `dislike/${id}`,
+    {},
+    {
+      headers: {
+        authorization: `${localStorage.getItem("token")}`,
+      },
+    }
+  );
 
 //commetn post services
 

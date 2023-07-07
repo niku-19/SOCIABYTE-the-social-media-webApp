@@ -53,9 +53,12 @@ const FreindProfile = () => {
           </div>
         </div>
         {postData?.postBySpecificUser?.map((eachPost) => {
+          const isLiked = eachPost.likes.includes(
+            JSON.parse(localStorage.getItem("user"))._id
+          );
           return (
             <div className={styles.feed__list__container} key={eachPost._id}>
-              <FeedCard DATA={eachPost} />
+              <FeedCard DATA={eachPost} isLiked={isLiked ? true : false} />
             </div>
           );
         })}

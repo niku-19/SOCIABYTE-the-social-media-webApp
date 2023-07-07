@@ -33,7 +33,7 @@ const UserProfile = () => {
             <img src={user?.avatar} alt="user" />
           </div>
         </div>
-        <div className={styles.flex__container}>
+        <div className={styles.profile__flex__container}>
           <div className={styles.user__name}>
             <h2>
               {user?.firstName} {user?.lastName}
@@ -54,7 +54,7 @@ const UserProfile = () => {
             </div>
           </div>
         </div>
-        <div className={styles.flex__container}>
+        <div className={styles.followers__flex__container}>
           <div className={styles.social__container}>
             <FcGallery className={styles.icon} />
             <button>Posts</button>
@@ -69,9 +69,12 @@ const UserProfile = () => {
           </div>
         </div>
         {postData?.postBySpecificUser?.map((eachPost) => {
+          const isLiked = eachPost.likes.includes(
+            JSON.parse(localStorage.getItem("user"))._id
+          );
           return (
             <div className={styles.feed__list__container} key={eachPost._id}>
-              <FeedCard DATA={eachPost} />
+              <FeedCard DATA={eachPost} isLiked={isLiked ? true : false} />
             </div>
           );
         })}

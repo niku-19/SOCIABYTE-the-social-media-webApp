@@ -5,8 +5,20 @@ import RightSideBar from "../../Components/RightSideBar/RightSideBar";
 import { useLoader } from "../../Context/LoaderContext";
 import HomePage from "../HomePage/HomePage";
 import PhoneNav from "../../Components/Phone Nav/PhoneNav";
+import PhoneFeedUpload from "../../Common/Phone feed Upload/PhoneFeedUpload";
+import { useState } from "react";
 
 const Landing = () => {
+  const [showPhoneFeedUpload, setShowPhoneFeedUpload] = useState(false);
+
+  const handleShowPhoneFeedUpload = () => {
+    setShowPhoneFeedUpload(true);
+  };
+
+  const handleHidePhoneFeedUpload = () => {
+    setShowPhoneFeedUpload(false);
+  };
+
   const { loader } = useLoader();
   return (
     <>
@@ -31,7 +43,12 @@ const Landing = () => {
         {/* side bar  */}
         <RightSideBar />
       </div>
-      <PhoneNav />
+      <PhoneNav handleShowPhoneFeedUpload={handleShowPhoneFeedUpload} />
+      {showPhoneFeedUpload && (
+        <PhoneFeedUpload
+          handleHidePhoneFeedUpload={handleHidePhoneFeedUpload}
+        />
+      )}
     </>
   );
 };

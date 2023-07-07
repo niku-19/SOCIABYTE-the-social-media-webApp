@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
   posts: [],
   postBySpecificUser: [],
+  isAlreadyLiked: false,
   bookmarkedPosts: [],
   loading: false,
   error: null,
@@ -14,7 +15,8 @@ const PostReducer = (state, { type, payload }) => {
         posts: payload,
       };
     }
-    case "LIKE_DISLIKE_POST": {
+
+    case "USER__LIKED__POST": {
       const updatedData = [...state.posts].map((eachPost) =>
         eachPost._id === payload._id
           ? {
@@ -24,9 +26,90 @@ const PostReducer = (state, { type, payload }) => {
             }
           : eachPost
       );
+      const updatedSpecificPost = [...state.postBySpecificUser].map(
+        (eachPost) =>
+          eachPost._id === payload._id
+            ? {
+                ...eachPost,
+                likes: payload.likes,
+                likedByUsers: payload.likedByUsers,
+              }
+            : eachPost
+      );
+
+      const updateBookMarkedPost = [...state.bookmarkedPosts].map((eachPost) =>
+        eachPost._id === payload._id
+          ? {
+              ...eachPost,
+              post_id: {
+                ...eachPost.post_id,
+                likes: payload.likes,
+              },
+              likedByUsers: payload.likedByUsers,
+            }
+          : eachPost
+      );
+
       return {
         ...state,
         posts: updatedData,
+        postBySpecificUser: updatedSpecificPost,
+        bookmarkedPosts: updateBookMarkedPost,
+      };
+    }
+
+    case "DISLIKE__POST": {
+      const updatedData = [...state.posts].map((eachPost) =>
+        eachPost._id === payload._id
+          ? {
+              ...eachPost,
+              likes: payload.likes,
+              likedByUsers: payload.likedByUsers,
+            }
+          : eachPost
+      );
+      const updatedSpecificPost = [...state.postBySpecificUser].map(
+        (eachPost) =>
+          eachPost._id === payload._id
+            ? {
+                ...eachPost,
+                likes: payload.likes,
+                likedByUsers: payload.likedByUsers,
+              }
+            : eachPost
+      );
+
+      const updateBookMarkedPost = [...state.bookmarkedPosts].map((eachPost) =>
+        eachPost._id === payload._id
+          ? {
+              ...eachPost,
+              post_id: {
+                ...eachPost.post_id,
+                likes: payload.likes,
+              },
+              likedByUsers: payload.likedByUsers,
+            }
+          : eachPost
+      );
+
+      return {
+        ...state,
+        posts: updatedData,
+        postBySpecificUser: updatedSpecificPost,
+        bookmarkedPosts: updateBookMarkedPost,
+      };
+    }
+
+    case "CHECK_IS_ALREADY_LIKE": {
+      const checkLike = [...state.posts].map((eachPost) =>
+        eachPost.likes.includes(payload._id)
+          ? { ...eachPost, isAlreadyLiked: true }
+          : { ...eachPost, isAlreadyLiked: false }
+      );
+
+      return {
+        ...state,
+        posts: checkLike,
       };
     }
 
@@ -111,6 +194,18 @@ const PostReducer = (state, { type, payload }) => {
         bookmarkedPosts: updatedData,
       };
     }
+
+    // case "CHECK_IS_ALREADY_BOOKMARK": {
+    //   const checkBookmarkPost = [...state.posts].map((eachPost) =>
+    //     eachPost.bookmarkedPosts.i
+    //       ? { ...eachPost, isAlreadyBookmark: true }
+    //       : { ...eachPost, isAlreadyBookmark: false }
+    //   );
+    //   return {
+    //     ...state,
+    //     posts: checkBookmarkPost,
+    //   };
+    // }
 
     default:
       return state;

@@ -11,6 +11,7 @@ import PhoneNav from "../../Components/Phone Nav/PhoneNav";
 
 const Explore = () => {
   const { loader } = useLoader();
+
   return (
     <>
       {loader.loader && <Loader />}

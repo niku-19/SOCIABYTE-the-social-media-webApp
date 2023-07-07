@@ -76,6 +76,6 @@
     display: none;
   }
   .search__bar {
-    width: 100%;
+    display: none;
   }
 }

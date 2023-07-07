@@ -18,7 +18,22 @@ const BookMarkList = () => {
               ...eachPost?.post_id,
               userId: eachPost?.user_id,
             };
-            return <FeedCard key={eachPost._id} DATA={DATA} />;
+            const isLiked = eachPost.post_id.likes.includes(
+              JSON.parse(localStorage.getItem("user"))._id
+            );
+
+            const isBookMarked =
+              eachPost?.user_id._id ===
+              JSON.parse(localStorage.getItem("user"))._id;
+
+            return (
+              <FeedCard
+                key={eachPost._id}
+                isLiked={isLiked ? true : false}
+                isBookMarked={isBookMarked ? true : false}
+                DATA={DATA}
+              />
+            );
           })
         ) : (
           <div className={styles.no__book__mark_post}>
