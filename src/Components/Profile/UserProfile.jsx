@@ -61,11 +61,11 @@ const UserProfile = () => {
           </div>
           <div className={styles.social__container}>
             <RiUserFollowLine className={styles.icon} />
-            <button>Followings ({user?.following.length})</button>
+            <button>Followings ({user?.following?.length})</button>
           </div>
           <div className={styles.social__container}>
             <FaUserFriends className={styles.icon} />
-            <button>Followers ({user?.followers.length})</button>
+            <button>Followers ({user?.followers?.length})</button>
           </div>
         </div>
         {postData?.postBySpecificUser?.map((eachPost) => {

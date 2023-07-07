@@ -4,6 +4,7 @@
 import { createContext, useContext, useState } from "react";
 import { getAllUsersServices } from "../Services/Auth.services";
 import {
+  deleteAccountService,
   followNewUserService,
   getFriendsDetailsService,
   getProfileByIdService,
@@ -130,6 +131,18 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  const deleteAccount = async () => {
+    try {
+      const res = await deleteAccountService();
+      console.log(
+        "🚀 ~ file: User-context.jsx:137 ~ deleteAccount ~ res:",
+        res
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <userContext.Provider
       value={{
@@ -146,6 +159,7 @@ const UserProvider = ({ children }) => {
         userToFollow,
         userToBeFollowed,
         unFlollowUser,
+        deleteAccount,
       }}
     >
       {children}

@@ -9,7 +9,7 @@ import { profileUpdateService } from "../../Services/Profile.services";
 import { useLoader } from "../../Context/LoaderContext";
 import Loader from "../../Components/Loader/Loader";
 
-const EditProfile = ({ closeEditProfile }) => {
+const EditProfile = ({ closeEditProfile, isAccountSeeting }) => {
   const { showLoader, hideLoader, loader } = useLoader();
   const { user, updatedUserDetails } = useUser();
   const avatarRef = useRef();
@@ -21,6 +21,8 @@ const EditProfile = ({ closeEditProfile }) => {
     bio: user?.bio,
     avatar: user?.avatar,
     cover: user?.cover,
+    email: user?.email,
+    password: user?.password,
   });
 
   const handleUploadAvatar = () => {
@@ -130,54 +132,92 @@ const EditProfile = ({ closeEditProfile }) => {
                 onChange={(e) => handleAddAvatarImage(e)}
               />
             </div>
+            {!isAccountSeeting && (
+              <div className={styles.form__group}>
+                <label htmlFor="">First Name</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  id="firstName"
+                  placeholder="First Name"
+                  value={updataedUser?.firstName}
+                  onChange={(e) => {
+                    setUpdataedUser({
+                      ...updataedUser,
+                      firstName: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+            )}
+            {!isAccountSeeting && (
+              <div className={styles.form__group}>
+                <label htmlFor="firstName">Last Name</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  id="firstName"
+                  placeholder="First Name"
+                  value={updataedUser?.lastName}
+                  onChange={(e) => {
+                    setUpdataedUser({
+                      ...updataedUser,
+                      lastName: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+            )}
+            {!isAccountSeeting && (
+              <div className={styles.form__group}>
+                <label htmlFor="firstName">Bio</label>
+                <textarea
+                  name="bio"
+                  id="bio"
+                  cols="30"
+                  rows="10"
+                  placeholder="Bio"
+                  value={updataedUser?.bio}
+                  onChange={(e) => {
+                    setUpdataedUser({
+                      ...updataedUser,
+                      bio: e.target.value,
+                    });
+                  }}
+                ></textarea>
+              </div>
+            )}
             <div className={styles.form__group}>
-              <label htmlFor="">First Name</label>
+              <label htmlFor="email">Email</label>
               <input
-                type="text"
-                name="firstName"
-                id="firstName"
-                placeholder="First Name"
-                value={updataedUser?.firstName}
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Email"
+                value={updataedUser?.email}
                 onChange={(e) => {
                   setUpdataedUser({
                     ...updataedUser,
-                    firstName: e.target.value,
+                    email: e.target.value,
                   });
                 }}
               />
             </div>
             <div className={styles.form__group}>
-              <label htmlFor="firstName">Last Name</label>
+              <label htmlFor="password">password</label>
               <input
                 type="text"
-                name="firstName"
-                id="firstName"
-                placeholder="First Name"
-                value={updataedUser?.lastName}
+                name="password"
+                id="password"
+                placeholder="Password"
+                value={updataedUser?.password}
                 onChange={(e) => {
                   setUpdataedUser({
                     ...updataedUser,
-                    lastName: e.target.value,
+                    password: e.target.value,
                   });
                 }}
               />
-            </div>
-            <div className={styles.form__group}>
-              <label htmlFor="firstName">Bio</label>
-              <textarea
-                name="bio"
-                id="bio"
-                cols="30"
-                rows="10"
-                placeholder="Bio"
-                value={updataedUser?.bio}
-                onChange={(e) => {
-                  setUpdataedUser({
-                    ...updataedUser,
-                    bio: e.target.value,
-                  });
-                }}
-              ></textarea>
             </div>
             <button onClick={(e) => handleUpdateProfileFunc(e, updataedUser)}>
               update profile

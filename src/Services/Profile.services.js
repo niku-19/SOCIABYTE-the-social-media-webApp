@@ -67,6 +67,13 @@ const userToBeFollowedService = async () =>
     },
   });
 
+const deleteAccountService = async () =>
+  await axios.delete(`delet-account`, {
+    headers: {
+      authorization: `${localStorage.getItem("token")}`,
+    },
+  });
+
 export {
   profileService,
   profileUpdateService,
@@ -75,4 +82,5 @@ export {
   getFriendsDetailsService,
   userToBeFollowedService,
   unfollowUserService,
+  deleteAccountService,
 };

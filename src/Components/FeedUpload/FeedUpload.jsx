@@ -47,11 +47,19 @@ const FeedUpload = () => {
     setTimeout(() => {
       getAllPosts();
     }, 1000);
+    setUserFeed({
+      content: "",
+      image: "",
+    });
   };
 
   return (
     <div className={styles.flex__container}>
-      <form action="">
+      <form
+        action=""
+        className={styles.form__container}
+        onSubmit={(e) => handleCreatePost(e)}
+      >
         <div className={styles.input__container}>
           <div className={styles.avatar__image__container}>
             <img src={user?.avatar} alt={user?.avatar} />
