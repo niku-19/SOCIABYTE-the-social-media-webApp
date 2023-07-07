@@ -121,3 +121,12 @@ form {
 .content__container button:hover {
   background-color: var(--color-primary-variant);
 }
+
+@media screen and (max-width: 500px) {
+  .model__container {
+    width: 90%;
+  }
+  .content__container {
+    margin-top: 3rem;
+  }
+}

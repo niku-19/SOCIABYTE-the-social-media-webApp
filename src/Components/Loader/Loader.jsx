@@ -1,8 +1,6 @@
 import { MoonLoader } from "react-spinners";
-import { useLoader } from "../../Context/LoaderContext";
 
 const Loader = () => {
-  const { loader } = useLoader();
   return (
     <>
       <div className="loader__container">
@@ -14,13 +12,6 @@ const Loader = () => {
           speedMultiplier={0.3}
         />
       </div>
-      <h1
-        style={{
-          color: "coral",
-        }}
-      >
-        {loader.loaderText}
-      </h1>
     </>
   );
 };
