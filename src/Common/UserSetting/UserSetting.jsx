@@ -17,6 +17,12 @@ const UserSetting = () => {
     window.location.reload();
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
+
   const closeEditProfile = () => setShowEditProfile(false);
 
   return (
@@ -56,7 +62,9 @@ const UserSetting = () => {
             </button>
           </div>
         </div>
-        <button className={styles.logout__btn}>Logout</button>
+        <button onClick={handleLogout} className={styles.logout__btn}>
+          Logout
+        </button>
       </div>
       {showEditProfile && (
         <EditProfile
