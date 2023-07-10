@@ -13,23 +13,41 @@ import {
   userToBeFollowedService,
 } from "../Services/Profile.services";
 import { useLoader } from "./LoaderContext";
+import { useToaster } from "./toast";
 
 const userContext = createContext();
 
 const UserProvider = ({ children }) => {
   const { showLoader, hideLoader } = useLoader();
+  const { errorToast } = useToaster();
   const [user, setUser] = useState(null);
   const [allUsers, setAllUsers] = useState([]);
+  console.log(
+    "🚀 ~ file: User-context.jsx:25 ~ UserProvider ~ allUsers:",
+    allUsers
+  );
   const [userToBeFollowed, setUserToBeFollowed] = useState([]);
   const [friends, setFriends] = useState([]);
   const [profile, setProfile] = useState(null);
 
-  const getUser = (userData) => {
-    setUser(userData);
+  const getUser = async (userData) => {
+    try {
+      showLoader("Getting User...");
+      setUser(userData);
+      hideLoader();
+    } catch (err) {
+      console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while getting user");
+      }
+    }
   };
 
   const updatedUserDetails = (userData) => {
+    showLoader("Updating User...");
     setUser(userData);
+    hideLoader();
   };
 
   const getAllUsers = async () => {
@@ -46,6 +64,10 @@ const UserProvider = ({ children }) => {
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while getting all users");
+      }
     }
   };
 
@@ -59,6 +81,10 @@ const UserProvider = ({ children }) => {
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while getting profile");
+      }
     }
   };
 
@@ -79,6 +105,10 @@ const UserProvider = ({ children }) => {
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while following user");
+      }
     }
   };
 
@@ -101,6 +131,10 @@ const UserProvider = ({ children }) => {
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while unfollowing user");
+      }
     }
   };
 
@@ -115,6 +149,10 @@ const UserProvider = ({ children }) => {
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while getting friends");
+      }
     }
   };
 
@@ -128,6 +166,10 @@ const UserProvider = ({ children }) => {
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while getting user to follow");
+      }
     }
   };
 
@@ -140,6 +182,10 @@ const UserProvider = ({ children }) => {
       );
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while deleting account");
+      }
     }
   };
 

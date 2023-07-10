@@ -1,7 +1,6 @@
 import Sort from "../../Common/Sort/Sort";
 import FeedList from "../../Components/Feed List/FeedList";
 import FeedUpload from "../../Components/FeedUpload/FeedUpload";
-import Header from "../../Components/Header/Header";
 import Loader from "../../Components/Loader/Loader";
 import Stories from "../../Components/Stories Card/Stories";
 import { useLoader } from "../../Context/LoaderContext";
@@ -16,7 +15,6 @@ const HomePage = () => {
 
       <div className={styles.feed__container}>
         <div className={styles.feed__upload__container}>
-          <Header />
           <Stories />
           <FeedUpload />
         </div>

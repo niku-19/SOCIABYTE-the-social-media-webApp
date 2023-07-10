@@ -23,13 +23,9 @@ const PostContext = createContext(null);
 
 const PostContextProvider = ({ children }) => {
   const { showLoader, hideLoader } = useLoader();
-  const { successToast } = useToaster();
+  const { successToast, errorToast } = useToaster();
   //errorToast, warrningToast
   const [postData, dispatch] = useReducer(PostReducer, INITIAL_STATE);
-  console.log(
-    "🚀 ~ file: Post-context.jsx:29 ~ PostContextProvider ~ postData:",
-    postData
-  );
 
   //create post calling the service
   const createNewPost = async (data) => {
@@ -42,6 +38,10 @@ const PostContextProvider = ({ children }) => {
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while creating post");
+      }
     }
   };
 
@@ -56,6 +56,10 @@ const PostContextProvider = ({ children }) => {
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while getting posts");
+      }
     }
   };
 
@@ -69,6 +73,10 @@ const PostContextProvider = ({ children }) => {
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while getting post");
+      }
     }
   };
 
@@ -80,10 +88,15 @@ const PostContextProvider = ({ children }) => {
       if (res.status === 200) {
         getAllPosts();
         hideLoader();
+        getPostById(JSON.parse(localStorage.getItem("user"))._id);
         successToast("Post Edited Successfully");
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while editing post");
+      }
     }
   };
 
@@ -97,9 +110,14 @@ const PostContextProvider = ({ children }) => {
           type: "USER__LIKED__POST",
           payload: res?.data?.postData,
         });
+        getBookmarkedPost();
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while liking post");
+      }
     }
   };
 
@@ -113,9 +131,14 @@ const PostContextProvider = ({ children }) => {
           type: "DISLIKE__POST",
           payload: res?.data?.postData,
         });
+        getBookmarkedPost();
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while disliking post");
+      }
     }
   };
 
@@ -128,9 +151,14 @@ const PostContextProvider = ({ children }) => {
         dispatch({ type: "CREATE_COMMENT", payload: res.data?.postData });
         hideLoader();
         successToast("Comment Created Successfully");
+        getBookmarkedPost();
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while creating comment");
+      }
     }
   };
 
@@ -143,9 +171,14 @@ const PostContextProvider = ({ children }) => {
         dispatch({ type: "DELETE_COMMENT", payload: res.data?.postData });
         hideLoader();
         successToast("Comment Deleted Successfully");
+        getBookmarkedPost();
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while deleting comment");
+      }
     }
   };
 
@@ -158,9 +191,14 @@ const PostContextProvider = ({ children }) => {
       if (res.status === 200) {
         showLoader();
         successToast("Post Bookmarked Successfully");
+        getBookmarkedPost();
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while bookmarking post");
+      }
     }
   };
 
@@ -179,6 +217,10 @@ const PostContextProvider = ({ children }) => {
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while getting bookmarked post");
+      }
     }
   };
 
@@ -192,9 +234,14 @@ const PostContextProvider = ({ children }) => {
           payload: res.data?.data,
         });
         hideLoader();
+        getBookmarkedPost();
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while removing bookmarked post");
+      }
     }
   };
 
@@ -205,10 +252,15 @@ const PostContextProvider = ({ children }) => {
       showLoader("Deleting Post...");
       const res = await deletePostServices(postId);
       if (res.status === 200) {
+        getPostById(JSON.parse(localStorage.getItem("user"))._id);
         hideLoader();
       }
     } catch (err) {
       console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while deleting post");
+      }
     }
   };
 

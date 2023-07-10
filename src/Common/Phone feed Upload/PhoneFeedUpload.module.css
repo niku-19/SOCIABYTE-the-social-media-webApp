@@ -20,6 +20,14 @@
   padding: 2rem 0;
   overflow-y: scroll;
 }
+.form__container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
 .edit__profile__header {
   width: 100%;
   height: max-content;
@@ -118,5 +126,16 @@
   .icon__container {
     width: 100%;
     justify-content: space-around;
+  }
+  .Post__icons {
+    font-size: 4rem;
+  }
+  .send__button {
+    width: 90%;
+    height: 7rem;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    background-color: blueviolet;
+    color: white;
   }
 }

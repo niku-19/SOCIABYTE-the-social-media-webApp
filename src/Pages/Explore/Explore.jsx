@@ -2,8 +2,7 @@ import FeedList from "../../Components/Feed List/FeedList";
 import LeftSideBar from "../../Components/LeftSideBar/LeftSideBar";
 import RightSideBar from "../../Components/RightSideBar/RightSideBar";
 import Sort from "../../Common/Sort/Sort";
-
-import styles from "./Explore.module.css";
+import Header from "../../Components/Header/Header";
 import { useLoader } from "../../Context/LoaderContext";
 import Loader from "../../Components/Loader/Loader";
 import { ToastContainer } from "react-toastify";
@@ -11,6 +10,7 @@ import PhoneNav from "../../Components/Phone Nav/PhoneNav";
 import { useState } from "react";
 import PhoneFeedUpload from "../../Common/Phone feed Upload/PhoneFeedUpload";
 
+import styles from "./Explore.module.css";
 const Explore = () => {
   const { loader } = useLoader();
   const [showPhoneFeedUpload, setShowPhoneFeedUpload] = useState(false);
@@ -43,6 +43,7 @@ const Explore = () => {
         <LeftSideBar />
         {/* feed section  */}
         <div className={styles.feed__container}>
+          <Header />
           <Sort />
           <FeedList />
         </div>

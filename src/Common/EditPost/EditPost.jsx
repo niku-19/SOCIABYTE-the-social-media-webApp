@@ -58,6 +58,7 @@ const EditPost = ({ edit, handleCloseEdit }) => {
         </div>
         <form
           action="#"
+          className={styles.form__container}
           onSubmit={(e) => handleEditPostOnSubmit(e, edit._id, editPost)}
         >
           <div className={styles.edit__imgae__container}>

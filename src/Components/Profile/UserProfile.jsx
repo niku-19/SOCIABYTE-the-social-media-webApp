@@ -11,6 +11,7 @@ import { usePostData } from "../../Context/Post-context";
 import FeedCard from "../../Common/FeedCard/FeedCard";
 import { useLoader } from "../../Context/LoaderContext";
 import Loader from "../Loader/Loader";
+import NoPost from "../../Common/No Post Yet/NoPost";
 // import FeedCard from "../../Common/FeedCard/FeedCard";
 
 const UserProfile = () => {
@@ -68,16 +69,20 @@ const UserProfile = () => {
             <button>Followers ({user?.followers?.length})</button>
           </div>
         </div>
-        {postData?.postBySpecificUser?.map((eachPost) => {
-          const isLiked = eachPost.likes.includes(
-            JSON.parse(localStorage.getItem("user"))._id
-          );
-          return (
-            <div className={styles.feed__list__container} key={eachPost._id}>
-              <FeedCard DATA={eachPost} isLiked={isLiked ? true : false} />
-            </div>
-          );
-        })}
+        {postData?.postBySpecificUser.length > 0 ? (
+          postData?.postBySpecificUser?.map((eachPost) => {
+            const isLiked = eachPost.likes.includes(
+              JSON.parse(localStorage.getItem("user"))._id
+            );
+            return (
+              <div className={styles.feed__list__container} key={eachPost._id}>
+                <FeedCard DATA={eachPost} isLiked={isLiked ? true : false} />
+              </div>
+            );
+          })
+        ) : (
+          <NoPost />
+        )}
         {showEditProfile && <EditProfile closeEditProfile={closeEditProfile} />}
       </div>
     </>

@@ -1,28 +1,31 @@
-import {MdSearch} from "react-icons/md";
-import { MdNotifications } from "react-icons/md";
-import { AiFillMessage } from "react-icons/ai";
+import { MdSearch } from "react-icons/md";
 
 import styles from "./Header.module.css";
-const Header = () => (
-  <div className={styles.header__container}>
-    <div className={styles.links}>
-      <div className={styles.link}>Home</div>
-      <div className={styles.link}></div>
-      <div className={styles.link}>About</div>
-    </div>
-    <div className={styles.search__bar}>
-      <input type="text" placeholder="Search" />
-      <MdSearch className={styles.search__icon} />
-    </div>
-    <div className={styles.icons__container}>
-      <div className={styles.icon}>
-        <AiFillMessage className={styles.message__icon} />
-      </div>
-      <div className={styles.icon}>
-        <MdNotifications className={styles.notification__icon} />
-      </div>
-    </div>
-  </div>
-)
+import SearchModel from "../../Common/Search Model/SearchModel";
+import { useState } from "react";
 
-export default Header
+const Header = () => {
+  const [showSearch, setShowSearch] = useState(false);
+
+  const closeSearch = () => {
+    setShowSearch(false);
+  };
+
+  return (
+    <>
+      <div className={styles.header__container}>
+        <div className={styles.search__bar}>
+          <input
+            type="text"
+            placeholder="Search"
+            onClick={() => setShowSearch(true)}
+          />
+          <MdSearch className={styles.search__icon} />
+        </div>
+      </div>
+      {showSearch && <SearchModel closeSearch={closeSearch} />}
+    </>
+  );
+};
+
+export default Header;

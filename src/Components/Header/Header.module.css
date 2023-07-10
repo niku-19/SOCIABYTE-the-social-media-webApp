@@ -16,7 +16,7 @@
 }
 
 .search__bar {
-  width: 50%;
+  width: 90%;
   height: 4.5rem;
   border-radius: 0.5rem;
   border: none;
@@ -69,13 +69,7 @@
 }
 
 @media screen and (max-width: 500px) {
-  .links {
-    display: none;
-  }
-  .icons__container {
-    display: none;
-  }
   .search__bar {
-    display: none;
+    width: 90%;
   }
 }

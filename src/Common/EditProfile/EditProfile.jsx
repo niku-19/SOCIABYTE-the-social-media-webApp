@@ -8,10 +8,14 @@ import { useRef, useState } from "react";
 import { profileUpdateService } from "../../Services/Profile.services";
 import { useLoader } from "../../Context/LoaderContext";
 import Loader from "../../Components/Loader/Loader";
+import { useToaster } from "../../Context/toast";
+import avatar from "../../Data/AvatarData";
 
 const EditProfile = ({ closeEditProfile, isAccountSeeting }) => {
   const { showLoader, hideLoader, loader } = useLoader();
   const { user, updatedUserDetails } = useUser();
+  const [showPreDefineAvatar, setShowPreDefineAvatar] = useState(false);
+  const { successToast, errorToast } = useToaster();
   const avatarRef = useRef();
   const coverRef = useRef();
 
@@ -23,6 +27,7 @@ const EditProfile = ({ closeEditProfile, isAccountSeeting }) => {
     cover: user?.cover,
     email: user?.email,
     password: user?.password,
+    preDefine__avatar: user?.avatar,
   });
 
   const handleUploadAvatar = () => {
@@ -70,13 +75,22 @@ const EditProfile = ({ closeEditProfile, isAccountSeeting }) => {
         localStorage.getItem("token"),
         updatedData
       );
+      console.log(
+        "🚀 ~ file: EditProfile.jsx:78 ~ handleUpdateProfileFunc ~ res:",
+        res
+      );
       if (res.status === 200) {
         updatedUserDetails(res?.data?.data);
         localStorage.setItem("user", JSON.stringify(res?.data?.data));
         hideLoader();
+        successToast("Profile Updated Successfully");
       }
     } catch (err) {
-      alert(err.message);
+      console.log(err);
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong while updating profile");
+      }
     }
     closeEditProfile();
   };
@@ -97,7 +111,7 @@ const EditProfile = ({ closeEditProfile, isAccountSeeting }) => {
           />
         </div>
         <div className={styles.form__container}>
-          <form action="#">
+          <form action="#" className={styles.form__container}>
             <div className={styles.cover__container}>
               <div className={styles.cover__image__container}>
                 <p>To Update Cover Image Please Click on Cover Image</p>
@@ -132,6 +146,35 @@ const EditProfile = ({ closeEditProfile, isAccountSeeting }) => {
                 onChange={(e) => handleAddAvatarImage(e)}
               />
             </div>
+            <h1>Or Choose Your Avatar Here</h1>
+            <div
+              onClick={() => setShowPreDefineAvatar((prev) => !prev)}
+              className={styles.preDefine__avatar}
+            >
+              <img src={updataedUser?.preDefine__avatar} alt="" />
+            </div>
+
+            {showPreDefineAvatar && (
+              <div className={styles.preDefine__avatar__container}>
+                {avatar.map((item, i) => {
+                  return (
+                    <div key={i} className={styles.preDefine__avatar__image}>
+                      <img
+                        src={item}
+                        alt=""
+                        onClick={() =>
+                          setUpdataedUser({
+                            ...updataedUser,
+                            avatar: item,
+                          })
+                        }
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
             {!isAccountSeeting && (
               <div className={styles.form__group}>
                 <label htmlFor="">First Name</label>
@@ -187,38 +230,42 @@ const EditProfile = ({ closeEditProfile, isAccountSeeting }) => {
                 ></textarea>
               </div>
             )}
-            <div className={styles.form__group}>
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Email"
-                value={updataedUser?.email}
-                onChange={(e) => {
-                  setUpdataedUser({
-                    ...updataedUser,
-                    email: e.target.value,
-                  });
-                }}
-              />
-            </div>
-            <div className={styles.form__group}>
-              <label htmlFor="password">password</label>
-              <input
-                type="text"
-                name="password"
-                id="password"
-                placeholder="Password"
-                value={updataedUser?.password}
-                onChange={(e) => {
-                  setUpdataedUser({
-                    ...updataedUser,
-                    password: e.target.value,
-                  });
-                }}
-              />
-            </div>
+            {isAccountSeeting && (
+              <div className={styles.form__group}>
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Email"
+                  value={updataedUser?.email}
+                  onChange={(e) => {
+                    setUpdataedUser({
+                      ...updataedUser,
+                      email: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+            )}
+            {isAccountSeeting && (
+              <div className={styles.form__group}>
+                <label htmlFor="password">password</label>
+                <input
+                  type="text"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  value={updataedUser?.password}
+                  onChange={(e) => {
+                    setUpdataedUser({
+                      ...updataedUser,
+                      password: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+            )}
             <button onClick={(e) => handleUpdateProfileFunc(e, updataedUser)}>
               update profile
             </button>

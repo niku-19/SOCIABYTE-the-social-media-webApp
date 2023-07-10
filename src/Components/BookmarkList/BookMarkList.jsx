@@ -1,4 +1,5 @@
 import FeedCard from "../../Common/FeedCard/FeedCard";
+import NoPost from "../../Common/No Post Yet/NoPost";
 import { useLoader } from "../../Context/LoaderContext";
 import { usePostData } from "../../Context/Post-context";
 import Loader from "../Loader/Loader";
@@ -22,6 +23,11 @@ const BookMarkList = () => {
               JSON.parse(localStorage.getItem("user"))._id
             );
 
+            console.log(
+              "🚀 ~ file: BookMarkList.jsx:24 ~ postData?.bookmarkedPosts?.map ~ isLiked:",
+              isLiked
+            );
+
             const isBookMarked =
               eachPost?.user_id._id ===
               JSON.parse(localStorage.getItem("user"))._id;
@@ -36,9 +42,7 @@ const BookMarkList = () => {
             );
           })
         ) : (
-          <div className={styles.no__book__mark_post}>
-            <h1>No Bookmarks</h1>
-          </div>
+          <NoPost />
         )}
       </div>
     </>

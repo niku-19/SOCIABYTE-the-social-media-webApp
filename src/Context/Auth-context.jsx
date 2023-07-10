@@ -27,7 +27,10 @@ const AuthProvider = ({ children }) => {
         }, 1000);
       }
     } catch (err) {
-      errorToast(err.response.data.message);
+      if (err) {
+        hideLoader();
+        errorToast(err.response.data.message);
+      }
     }
   };
 
@@ -49,7 +52,10 @@ const AuthProvider = ({ children }) => {
         hideLoader();
       }
     } catch (err) {
-      errorToast(err.response.data.message);
+      if (err) {
+        hideLoader();
+        errorToast(err.response.data.message);
+      }
     }
   };
 
@@ -76,7 +82,10 @@ const AuthProvider = ({ children }) => {
         hideLoader();
       }
     } catch (err) {
-      errorToast("Something went wrong! Please try again later! ");
+      if (err) {
+        hideLoader();
+        errorToast("Something went wrong! Please try again later! ");
+      }
     }
   };
 

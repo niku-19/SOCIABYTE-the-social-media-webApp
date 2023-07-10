@@ -71,6 +71,13 @@
   justify-content: center;
   align-items: center;
 }
+.emoji__container {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 @media screen and (max-width: 500px) {
   .flex__container {

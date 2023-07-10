@@ -13,6 +13,7 @@ import Loader from "../../Components/Loader/Loader";
 import { ToastContainer } from "react-toastify";
 import PhoneNav from "../../Components/Phone Nav/PhoneNav";
 import PhoneFeedUpload from "../../Common/Phone feed Upload/PhoneFeedUpload";
+import { useToaster } from "../../Context/toast";
 
 const ProfilePage = () => {
   const { getUser } = useUser();
@@ -28,6 +29,7 @@ const ProfilePage = () => {
   };
 
   const { loader, showLoader, hideLoader } = useLoader();
+  const { errorToast } = useToaster();
   useEffect(() => {
     (async () => {
       try {
@@ -40,6 +42,10 @@ const ProfilePage = () => {
         }
       } catch (err) {
         console.log(err);
+        if (err) {
+          hideLoader();
+          errorToast("Something went wrong while fetching profile");
+        }
       }
     })();
   }, []);

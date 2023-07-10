@@ -72,7 +72,11 @@ const PhoneFeedUpload = ({ handleHidePhoneFeedUpload }) => {
           />
         </div>
         <div className={styles.flex__container}>
-          <form action="" onSubmit={(e) => handleCreatePost(e)}>
+          <form
+            action=""
+            className={styles.form__container}
+            onSubmit={(e) => handleCreatePost(e)}
+          >
             <div className={styles.input__container}>
               <div className={styles.avatar__image__container}>
                 <img src={user?.avatar} alt={user?.avatar} />
@@ -109,7 +113,7 @@ const PhoneFeedUpload = ({ handleHidePhoneFeedUpload }) => {
               className={styles.send__button}
               onClick={(e) => handleCreatePost(e)}
             >
-              <RiSendPlane2Fill className={styles.icons} />
+              <RiSendPlane2Fill className={styles.Post__icons} />
             </div>
           </form>
         </div>

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import FeedCard from "../../Common/FeedCard/FeedCard";
 import styles from "./FeedList.module.css";
 import { usePostData } from "../../Context/Post-context";
+import NoPost from "../../Common/No Post Yet/NoPost";
 const FeedList = () => {
   const { getAllPosts, postData, bookmarkPost, dispatch } = usePostData();
 
@@ -42,7 +43,7 @@ const FeedList = () => {
           );
         })
       ) : (
-        <h1>No Posts</h1>
+        <NoPost />
       )}
     </div>
   );

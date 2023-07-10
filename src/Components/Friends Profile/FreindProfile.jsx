@@ -9,6 +9,7 @@ import FeedCard from "../../Common/FeedCard/FeedCard";
 import { usePostData } from "../../Context/Post-context";
 import { useLoader } from "../../Context/LoaderContext";
 import Loader from "../Loader/Loader";
+import NoPost from "../../Common/No Post Yet/NoPost";
 const FreindProfile = () => {
   const { profile } = useUser();
   const { loader } = useLoader();
@@ -52,16 +53,20 @@ const FreindProfile = () => {
             <button>Followers ({profile?.followers.length})</button>
           </div>
         </div>
-        {postData?.postBySpecificUser?.map((eachPost) => {
-          const isLiked = eachPost.likes.includes(
-            JSON.parse(localStorage.getItem("user"))._id
-          );
-          return (
-            <div className={styles.feed__list__container} key={eachPost._id}>
-              <FeedCard DATA={eachPost} isLiked={isLiked ? true : false} />
-            </div>
-          );
-        })}
+        {postData?.postBySpecificUser.length > 0 ? (
+          postData?.postBySpecificUser?.map((eachPost) => {
+            const isLiked = eachPost.likes.includes(
+              JSON.parse(localStorage.getItem("user"))._id
+            );
+            return (
+              <div className={styles.feed__list__container} key={eachPost._id}>
+                <FeedCard DATA={eachPost} isLiked={isLiked ? true : false} />
+              </div>
+            );
+          })
+        ) : (
+          <NoPost />
+        )}
       </div>
     </>
   );
