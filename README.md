@@ -4,9 +4,6 @@
 
 ### SOCIABYTE is Social Media Application for users which can be used to communicate with each other. It is a simple and easy to use application which can be used to communicate with each other in Realtime.
 
-![Forks](https://img.shields.io/github/forks/spraveenofficial/SOCIABYTE)
-![Stars](https://img.shields.io/github/stars/spraveenofficial/SOCIABYTE)
-
 </div>
 
 ## <!--
@@ -60,9 +57,6 @@ Live Demo: [here] (https://sociabyte-the-social-media-web-app.vercel.app/)
 
 ---
 
-## Preview
-
-<img src="/public/images/demo.jpg" alt="SOCIABYTE Social Media Application" />
 
 
 ````
