@@ -63,8 +63,8 @@ const AuthProvider = ({ children }) => {
 
   const guestLoginHandler = async () => {
     const userData = {
-      email: "nikhilranjankumar@gmail.com",
-      password: "123456789",
+      email: "niku@braincells.in",
+      password: "123123123",
     };
 
     try {
